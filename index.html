@@ -3,22 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News Aggregator</title>
+    <title>Zoo Simulation</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>News Aggregator</h1>
-    </header>
-    <main>
-        <section class="search">
-            <input type="text" id="searchTerm" placeholder="Search for news...">
-            <button id="searchBtn">Search</button>
-        </section>
-        <section class="news-container">
-            <div id="news"></div>
-        </section>
-    </main>
-    <script src="script.js"></script>
+   
+    
+    <p id="status-bar"></p>
+    <div class="button-panel">
+
+
+        <button id="pause-button">PAUSE</button>
+        <button id="spawn-animals">SPAWN</button>
+        <button id="restart-button">RESTART</button>
+        
+      </div>
+<div></div>>
+    <div class="wrapper">
+        <canvas id="zoo"></canvas>
+        
+    </div>
+
+    <div class="slider-container">
+    <label for="food-rate">Food Spawning Rate:</label>
+    <input type="range" id="food-rate" min="0" max="100" value="10">
+    </div> 
+
+    <div class="slider-container">
+    <label for="speed-slider">Simulation Speed:</label>
+<input type="range" id="speed-slider" min="0" max="2" value="1" step="0.1">
+</div> 
+    
+  
+
+    <!-- <button id="pause-button">Pause</button> <button id="restart-button">Restart</button>
+<button id="spawn-animals">Spawn</button> -->
+   
+
+
+    <script src="simulation.js"></script>
+    
 </body>
 </html>
