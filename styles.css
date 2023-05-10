@@ -1,9 +1,7 @@
-
-
 body {
     font-family: Arial, sans-serif;
-    background-color: var(--background-color);
-    color: var(--primary-color);
+    background-color: #002b36;
+    color: #fff;
     margin: 0;
     padding: 0;
     display: flex;
@@ -18,194 +16,70 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 90vw; /* Increased width */
-    height: 80vh;
-    background-color: var(--secondary-color);
-    box-shadow: 0 0 10px var(--box-shadow-color);
+    width: 95vw;
+    height: 95vh;
+    background-color: #4ec4f7;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
-    padding: 20px;
+    padding:5px;
     box-sizing: border-box;
-    border-radius: 15%; /* Decreased for wider screen */
-    border: 1px solid var(--primary-color);
-    margin-top: 50px;
+    border-radius: 0;
+    border: 2px solid white;
+    margin-top: 5px;
 }
 
-.button-group button, 
-.button-panel button, 
+.button-group button,
+.button-panel button,
 button {
-    margin: 5px 10px;
-    padding: 10px 10px;
+    margin: 10px;
+    padding: 0;
     border: none;
+    display: inline;
     border-radius: 5px;
-    background-color: var(--primary-color);
-    color: var(--button-color); /* using variable for easier changes */
+    background-color: #fff;
+    color: #002b36;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
     outline: none;
     font-family: 'Press Start 2P', cursive;
     text-align: center;
-    font-size: 15px; /* Increased font size for better visibility */
-    width: 20%;
-    height: 10%;
+    font-size: 16px;
+    width: 120px;
+    height: 40px;
+    text-shadow: 1px 1px #000;
 }
 
-.button-group button:hover, 
-.button-panel button:hover, 
+.button-group button:hover,
+.button-panel button:hover,
 button:hover {
-    background-color: var(--button-hover-color); /* using variable for easier changes */
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
 }
 
-.button-group button:active, 
-.button-panel button:active, 
+.button-group button:active,
+.button-panel button:active,
 button:active {
-    background-color: var(--button-active-color); /* using variable for easier changes */
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-    transform: translateY(1px);
+background-color: #111;
+box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+transform: translateY(1px);
 }
 
 .slider-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
+display: flex;
+align-items: center;
+justify-content: center;
+margin-top: 10px;
+margin-bottom: 10px;
 }
 
 .slider-container label {
-    font-size: 18px; /* Increased font size for better visibility */
-    margin-right: 10px;
+font-size: 18px;
+margin-right: 10px;
 }
 
 .slider-container input {
-    width: 50%; /* Adjust as needed */
-}
-/* body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-} */
-/* canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-} */
-:root {
-    --primary-color: rgb(47, 85, 255);
-    --secondary-color: rgb(193, 247, 188);
-    --background-color: #000; /* change to black for the television body */
-    --box-shadow-color: rgba(0, 0, 0, 0.1);
-    --button-color: #fff;
-    --button-hover-color: #555;
-    --button-active-color: #111;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: var(--background-color);
-    color: var(--primary-color);
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-}
-
-.wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 98vw; /* Increased width */
-    height: 98vh;
-    background-color: var(--secondary-color);
-    box-shadow: 0 0 10px var(--box-shadow-color);
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    padding: 20px;
-    box-sizing: border-box;
-    border-radius: 15%; /* Decreased for wider screen */
-    border: 5px solid var(--primary-color);
-    margin-top: 10px;
-}
-
-.button-group button, 
-.button-panel button, 
-button {
-    margin: 0 5px;
-    padding: 0px;
-    border: none;
-    margin-top: 5px;
-    display: inline;
-    border-radius: 5px;
-    background-color: var(--primary-color);
-    color: var(--button-color); /* using variable for easier changes */
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-    outline: 1px white;
-    font-family: 'Press Start 2P', cursive;
-    text-align: flex;
-    font-size: 12px; /* Increased font size for better visibility */
-    width: 90px;
-    height: 30px;
-}
-
-.button-group button:hover, 
-.button-panel button:hover, 
-button:hover {
-    background-color: var(--button-hover-color); /* using variable for easier changes */
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
-}
-
-.button-group button:active, 
-.button-panel button:active, 
-button:active {
-    background-color: var(--button-active-color); /* using variable for easier changes */
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-    transform: translateY(1px);
-}
-
-.slider-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.slider-container label {
-    font-size: 18px; /* Increased font size for better visibility */
-    margin-right: 10px;
-}
-
-.slider-container input {
-    width: 50%; /* Adjust as needed */
-}
-body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-}
-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-body {
-    
-    background-image: url('path/to/your/image.jpg');
-    background-size: cover;
-    background-position: center;
-}
-.button-group {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+width: 70%;
 }

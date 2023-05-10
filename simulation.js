@@ -2,6 +2,7 @@ window.onload = function() {
 let pauseSimulation = false;
 let deaths = 0;
 let livingAnimals=0
+let maxLevel=10
 
 
 let timeScale = 1;
@@ -12,23 +13,23 @@ speedSlider.addEventListener('input', function() {
 
 
 class Animal {
-    constructor(x, y, color, level = 0, offspring = 0, speed = Math.min(Math.floor(Math.random() * 5) + 1, 5), iq = Math.floor(Math.random() * 10) + 1, efficiency = Math.min(Math.floor(Math.random() * 5) + 1, 3)) {
+    constructor(x, y, color, level = 0, offspring = 0, speed = Math.min(Math.floor(Math.random() * 5) + 1, 5), iq = Math.floor(Math.random() * 10) + 1, metabolism = Math.min(Math.floor(Math.random() * 5) + 1, 3)) {
         this.x = x;
         this.y = y;
         this.size = 10;
-        this.food = 50;
+        this.food = 70;
         this.dead = false;
-        this.generation = offspring; // Changed here
+        this.generation = offspring;
         this.speed = speed;
         this.iq = iq;
-        this.efficiency = efficiency;
+        this.metabolism = metabolism;
         this.deathTime = null;
         this.color = color || `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
         this.level = level;
         this.reproduceCooldown = 0;
         this.hasEaten = false;
-        this.offspring = offspring;  
-        livingAnimals++;  
+        this.offspring = offspring;
+        this.isMaxLevel = false; // New property to keep track if the animal reached max level
     }
 
     draw() {
@@ -40,12 +41,27 @@ class Animal {
         ctx.arc(this.x, this.y, radius, 0, 2 * Math.PI);
         ctx.fill();
         ctx.stroke();
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = this.color;
+        ctx.fill();
+        ctx.stroke();
+
+        // Draw flashing gold ring if the animal is at max level
+        if (this.isMaxLevel) {
+            ctx.save();
+            ctx.strokeStyle = 'gold';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([10, 10]);
+            ctx.beginPath();
+            ctx.ellipse(this.x, this.y, radius + 5, radius + 5, 0, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.restore();
+        }
 
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
         ctx.fillText(this.level, this.x, this.y + 5);
     }
-
 
     move(foodItems) {
         if (!this.dead) {
@@ -116,6 +132,7 @@ class Animal {
         }
     }
     
+    
 
     draw() {
         const radius = this.dead ? this.size / 2 : this.size;
@@ -133,7 +150,7 @@ class Animal {
             update(timeScale) {
                 // Some logic here to update the animal's state
                 // For example, you might decrease the animal's food supply:
-                this.food -= this.efficiency * timeScale / 10;
+                this.food -= this.metabolism * timeScale / 10;
                 let newLevel = Math.floor(this.food / 20);
                 if (newLevel > this.level) {
                     // Level up and grow by 10%
@@ -148,20 +165,24 @@ class Animal {
                     livingAnimals--;  // Decrement living animals counter
                     this.deathTime = Date.now();
                 }
-            
+                if (this.level >= 10 && !this.isMaxLevel) {
+                    this.isMaxLevel = true;
+                    this.size *= 1.1; // Remove growth when animal reaches max level
+                }
+        
         
      // If the animal has enough food, it reproduces
-     if (this.food >= 85 && this.reproduceCooldown <= 0 && this.hasEaten) {
-        this.food -= 40;
-        this.reproduceCooldown = 3;  // 3 seconds cooldown
+     if (this.food >= 55 && this.reproduceCooldown <= 0 && this.hasEaten) {
+        this.food -= 20;
+        this.reproduceCooldown = 1.5;  // 3 seconds cooldown
         this.hasEaten = false;
         const x = this.x + Math.random() * 20 - 10;
         const y = this.y + Math.random() * 20 - 10;
         const generation = this.generation + 1;
         const speed = Math.max(1, this.speed + Math.ceil(Math.random() * 3) - 1);
         const iq = Math.max(1, this.iq + Math.ceil(Math.random() * 3) - 1);
-        const efficiency = Math.max(1, this.efficiency + Math.ceil(Math.random() * 3) - 1);
-        return new Animal(x, y, this.color, this.level, generation, speed, iq, efficiency);
+        const metabolism = Math.max(1, this.metabolism + Math.ceil(Math.random() * 3) - 1);
+        return new Animal(x, y, this.color, this.level, generation, speed, iq, metabolism);
     }
 
 
@@ -197,16 +218,24 @@ function restart() {
     pauseSimulation = false;
     animals = [];
     foodItems = [];
-    livingAnimals=0;
-    deaths=0;
+    livingAnimals = 0;
+    deaths = 0;
+
+    // Add random blue lake
+    const lakeWidth = Math.random() * 0.15 * canvas.width;
+    const lakeHeight = Math.random() * 0.15 * canvas.height;
+    const lakeX = Math.random() * (canvas.width - lakeWidth);
+    const lakeY = Math.random() * (canvas.height - lakeHeight);
+    ctx.fillStyle = 'blue';
+    ctx.fillRect(lakeX, lakeY, lakeWidth, lakeHeight);
+
     for (let i = 0; i < 10; i++) {
         const x = Math.random() * (canvas.width - 2 * Animal.size) + Animal.size;
         const y = Math.random() * (canvas.height - 2 * Animal.size) + Animal.size;
         const colorIndex = i % colors.length;
         animals.push(new Animal(x, y, colors[colorIndex]));
     }
-}
-    
+}  
 
     
     let foodItems = [];
@@ -253,9 +282,11 @@ function restart() {
             animals.forEach(animal => {
                 animal.move(foodItems);
                 animal.consume(foodItems, [], animals); // Pass the animals array here
-                const offspring = animal.update(timeScale);
+                let offspring = animal.update(timeScale);
                 if (offspring) {
                     animals.push(offspring);
+                    livingAnimals++;
+                    offspring++;
                 }
                 animal.draw();
             });
@@ -281,6 +312,7 @@ function restart() {
         animals = [];
         foodItems = [];
         for (let i = 0; i < 10; i++) {
+            livingAnimals++;
             const x = Math.random() * canvas.width;
             const y = Math.random() * canvas.height;
             animals.push(new Animal(x, y));
@@ -305,6 +337,7 @@ function restart() {
             const x = Math.random() * (canvas.width - 20) + 10;
             const y = Math.random() * (canvas.height - 20) + 10;
             animals.push(new Animal(x, y));
+            livingAnimals++;
         }
     });
 
