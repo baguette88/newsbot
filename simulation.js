@@ -17,7 +17,7 @@ class Animal {
         this.x = x;
         this.y = y;
         this.size = 10;
-        this.food = 70;
+        this.food = 88;
         this.dead = false;
         this.generation = offspring;
         this.speed = speed;
